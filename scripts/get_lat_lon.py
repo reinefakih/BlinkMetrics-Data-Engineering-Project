@@ -14,7 +14,7 @@ API_KEY = os.getenv('BLINKMETRICS_OPENWEATHER_API_KEY')
 
 # first I will define a dictionary containing City Name as Key and Country Code as Value to use it to retrieve the lat-lon values
 # I will be using a small number of cities :D
-city_country_code = {
+CITY_COUNTRY_CODE = {
     "Canberra": "AU",   # Australia
     "Brasília": "BR",   # Brazil
     "Ottawa": "CA",     # Canada
@@ -38,32 +38,43 @@ city_country_code = {
     "Washington, D.C.": "US", # United States
 }
 
-lat_lon = [] # initializing an emoty list so I can store the lat-lon tuples inside it
+def get_lat_lon() -> list:
+    """
+    Calls the open weather geocoding api to get the latitude and longitude of cities and returns a list.
 
-# for loop to take the city name and the country code from above, run them through the api to get the lat-lon values
-for city_name in city_country_code:
-    
-    # using the appropriate API parameters
-    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city_name},{city_country_code[city_name]}&limit=1&appid={API_KEY}'
+    Returns:
+        list: A list of dictionaries containing the country name, its latitude and longitude.
+    """
+    lat_lon = [] # initializing an empty list so I can store the lat-lon tuples inside it
 
-    try: # to make sure we have no errors in the response and to know where it happened!
-        response = requests.get(url) # call the API
-        # print(response.status_code)
-        response.raise_for_status() # raise HTTPError if any happens
+    # for loop to take the city name and the country code from above, run them through the api to get the lat-lon values
+    for city_name in CITY_COUNTRY_CODE:
         
-        data = response.json() # if no error occurs with the API, store the response here
-        
-        if not len(data): # if there is an issue with the city name or country code (them being unavailable) we will get an empty response
-            raise Exception(f"Response data is empty at {city_name}, {city_country_code[city_name]}") # if we get an empty response raise an error
+        # using the appropriate API parameters
+        url = f'http://api.openweathermap.org/geo/1.0/direct?q={city_name},{CITY_COUNTRY_CODE[city_name]}&limit=1&appid={API_KEY}'
 
-        lat_lon.append((data[0]['lat'], data[0]['lon'])) # no issue with the response, append the tuple to the list 
+        try: # to make sure we have no errors in the response and to know where it happened!
+            response = requests.get(url) # call the API
+            # print(response.status_code)
+            response.raise_for_status() # raise HTTPError if any happens
+            
+            data = response.json() # if no error occurs with the API, store the response here
+            
+            if not len(data): # if there is an issue with the city name or country code (them being unavailable) we will get an empty response
+                raise Exception(f"Response data is empty at {city_name}, {CITY_COUNTRY_CODE[city_name]}") # if we get an empty response raise an error
 
-    except Exception as e: # here if we have an HTTP error we print it
-        print(str(e).split(': https')[0])
+            lat_lon.append({'city_name': city_name, 'latitude': data[0]['lat'], 'longitude' : data[0]['lon']}) # no issue with the response, append the tuple to the list 
 
-# TODO: improve validation
-if len(lat_lon) == len(city_country_code):
-    print(lat_lon)
+        except Exception as e: # here if we have an HTTP error we print it
+            print(str(e).split(': https')[0])
 
-else:
-    print('Not all the countries were processed')
+    # TODO: improve validation
+    if len(lat_lon) == len(CITY_COUNTRY_CODE):
+        return lat_lon
+
+    else:
+        print('Not all the countries were processed')
+        return []
+
+# print(get_lat_lon())
+# print("Finished processing")
