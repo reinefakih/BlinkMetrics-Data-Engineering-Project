@@ -157,8 +157,18 @@ def get_jsonschema(source_id: str, token: str) -> dict:
 
 # print(get_jsonschema("e25e436c-a7d9-4c24-b652-1dc67e6180a5", TOKEN))
 
-def create_connection(source_id, source_name, destination_id, jsonschema, token):
+# function to create a connection between the source and the destination
+def create_connection(source_id: str, source_name: str, destination_id: str, jsonschema: dict, token: str):
+    """
+    this function creates a connection between the source and the destination
 
+    Args:
+        source_id (str): the source id
+        source_name (str): the name of the source
+        destination_id (str): the destination id
+        jsonschema (dict): the schema of the data in the source
+        token (str): the authorization token
+    """
     url = AIRBYTE_API + "/connections/create"
 
     payload = {
