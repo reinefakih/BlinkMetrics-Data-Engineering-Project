@@ -44,7 +44,7 @@ def get_city_name(lat: str, lon: str) -> dict:
     function to get city name from latitude and longitude using openweather reverse geocoding API
     
     Args: 
-        lat (str): city latitude
+        lat(str): city latitude
         lon (str): city longitude
     
     Returns:
@@ -141,5 +141,5 @@ def transform_data() -> list:
     
     return [final_fact, dim_cities, dim_weather]
 
-if test_connection():
-    print(transform_data())
+# if test_connection():
+#     print(transform_data())
