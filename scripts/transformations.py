@@ -133,13 +133,19 @@ def transform_data() -> list:
     # ---------------------------------------------------------------- #
     
     final_fact = cleaned_df.merge(dim_cities, on='city', how='inner')
-    final_fact = final_fact.drop(columns=['city', 'country'], axis=0)
+    final_fact = final_fact.drop(columns=['city', 'country'], axis=0) 
     final_fact = final_fact[['id', 'date', 'city_id', 'summary', 'temp_morn', 'temp_day', 'temp_eve',
         'temp_night', 'temp_min', 'temp_max', 'feels_like_morn',
-        'feels_like_day', 'feels_like_eve', 'feels_like_night', 'pressure',
+        'feels_like_day', 'feels_like_eve', 'feels_like_night', 'pressure','humidity', 'dew_point', 'wind_speed', 'wind_gust', 'clouds', 'uvi',
         'precep_prob', 'rain', 'weather_id', 'extracted_at']]
     
     return [final_fact, dim_cities, dim_weather]
 
 # if test_connection():
 #     print(transform_data())
+
+# to get csv files:
+# trans = transform_data()
+# trans[0].to_csv('csv files/fact.csv', index=False)
+# trans[1].to_csv('csv files/cities.csv', index=False)
+# trans[2].to_csv('csv files/weather.csv', index=False)
