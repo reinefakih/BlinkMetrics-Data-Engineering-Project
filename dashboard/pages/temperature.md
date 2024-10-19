@@ -61,7 +61,6 @@ sidebar_position: 3
       AVG(feels_like_night) AS feels_like_night,
       "date"
     FROM weather_warehouse.fact
-    WHERE "date" BETWEEN '${inputs.date_filtering.start}' and '${inputs.date_filtering.end}'
     GROUP BY "date"
   ```
 
