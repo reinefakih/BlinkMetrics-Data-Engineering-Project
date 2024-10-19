@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS `fact_weather_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fact_weather_details` (
-  `id` bigint DEFAULT NULL,
+  `id` bigint NOT NULL,
   `date` datetime DEFAULT NULL,
   `city_id` bigint DEFAULT NULL,
   `summary` text,
@@ -97,7 +97,12 @@ CREATE TABLE `fact_weather_details` (
   `precep_prob` double DEFAULT NULL,
   `rain` double DEFAULT NULL,
   `weather_id` bigint DEFAULT NULL,
-  `extracted_at` datetime DEFAULT NULL
+  `extracted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_city_fact_idx` (`city_id`),
+  KEY `fk_weather_fact_idx` (`weather_id`),
+  CONSTRAINT `fk_city_fact` FOREIGN KEY (`city_id`) REFERENCES `dim_cities` (`city_id`),
+  CONSTRAINT `fk_weather_fact` FOREIGN KEY (`weather_id`) REFERENCES `dim_weather` (`weather_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -120,4 +125,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-18 20:13:35
+-- Dump completed on 2024-10-19 21:54:00
