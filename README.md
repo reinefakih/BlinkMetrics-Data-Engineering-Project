@@ -85,3 +85,12 @@ To download the requirements:
    5. Transformation and Loading Scripts
 3. **dashboard:** contains all the backend of the Evidence Dashboard
 4. **mysql scripts:** contains two SQL scripts one for the warehouse and one for the staging area both with their data.
+
+## Future Improvements:
+
+1. Automating the whole ETL process and scheduling Data ingestion.
+2. Adding Historical Data to aid the analysis -> can add date slicers to dashboard 
+3. Fixing up the UI for both dashboards
+4. Cleaning and optimizing the transformations script
+5. Make the dashboard more insightful and meaningful
+6. Turning the project from ETL to ELT 
